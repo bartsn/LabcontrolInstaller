@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO.Pipes;
 using System.Linq;
@@ -19,11 +20,16 @@ namespace LabcontrolInstall
 {
     public partial class Form1 : Form
     {
+        private String myScriptFileName = "C:\\github\\LabcontrolInstaller\\src\\LabcontrolInstall\\LabcontrolInstaller.ps1";
         public Form1()
         {
             InitializeComponent();
         }
 
+        public void setScriptFileName(String fileName)
+        {
+            this.myScriptFileName = @fileName; 
+        }
         // UI-safe append
         private void AppendOutput(string text)
         {
@@ -38,23 +44,12 @@ namespace LabcontrolInstall
         }
         private async void button1_Click(object sender, EventArgs e)
         {
-
-
-            //richOutBox.Clear();
-
-            /*
+           
+            
             using (PowerShell ps = PowerShell.Create())
             {
-                ps.AddScript(@"
-                Write-Host 'Host output'
-                Write-Output 'Normal output'
-                Write-Warning 'Some warning'
-                Write-Error 'Something went wrong'
-            ");
-            */
-            using (PowerShell ps = PowerShell.Create())
-            {
-                ps.AddScript(@"C:\github\LabcontrolInstaller\src\LabcontrolInstall\testscript.ps1");
+                //ps.AddScript(@"C:\github\LabcontrolInstaller\src\LabcontrolInstall\testscript.ps1");
+                ps.AddScript(this.myScriptFileName);
                 // STREAM HANDLERS
                 ps.Streams.Information.DataAdded += (s, args) =>
                 {
