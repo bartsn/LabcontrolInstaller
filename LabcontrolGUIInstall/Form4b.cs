@@ -8,13 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp3
 {
-    public partial class Form2 : Form
+    
+    public partial class Form4b : Form
     {
-        public Form2()
+        private Bitmap myBitmap = null;
+        public Form4b()
         {
             InitializeComponent();
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

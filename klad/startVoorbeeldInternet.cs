@@ -1,4 +1,4 @@
-﻿// Source - https://stackoverflow.com/a
+// Source - https://stackoverflow.com/a
 // Posted by Cyberclops, modified by community. See post 'Timeline' for change history
 // Retrieved 2025-11-13, License - CC BY-SA 4.0
 
@@ -12,11 +12,7 @@ class Program
     static async Task Main(string[] args)
     {
         // Path to the PowerShell script
-        string path = Directory.GetCurrentDirectory();
-        string fileName = "LabcontrolInstaller.ps1";
-        string combiPath = Path.Join(path, fileName);
-        string psScriptPath = @combiPath;
-        Console.WriteLine($"Huidige directory van installer: {path}");
+        string psScriptPath = @"C:\temp\LabcontrolInstallerv2.ps1";
 
         // Run the script and capture the output
         var result = await ExecutePowerShellScriptAsync(psScriptPath);
@@ -34,7 +30,6 @@ class Program
         {
             // Create a temporary output file
             string tempOutputFile = Path.Combine(Path.GetTempPath(), $"ps_output_{Guid.NewGuid()}.txt");
-            Console.WriteLine($"tempoutfile is: {tempOutputFile}");
 
             // Wrap PowerShell script with native PowerShell output capture
             string wrappedCommand = $@"
@@ -55,10 +50,10 @@ class Program
             ProcessStartInfo psi = new ProcessStartInfo
             {
                 FileName = "powershell.exe",
-                Arguments = $"-ExecutionPolicy RemoteSigned -Command \"{wrappedCommand}\"",
+                Arguments = $"-ExecutionPolicy Bypass -Command \"{wrappedCommand}\"",
                 Verb = "runas", // This is the key property for elevation
                 UseShellExecute = true, // Required for the Verb property to work
-                WindowStyle = ProcessWindowStyle.Normal// Hide the window
+                WindowStyle = ProcessWindowStyle.Hidden // Hide the window
             };
 
             using (Process process = Process.Start(psi))
